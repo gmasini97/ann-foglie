@@ -6,3 +6,5 @@ submission/SubmissionModel/**
 submission/*.zip
 backup/**
 checkpoints/**
+model.h5
+models/**
