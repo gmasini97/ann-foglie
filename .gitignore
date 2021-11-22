@@ -1,8 +1,10 @@
 dataset/**
+dataset_w_test/**
 starting_kit/**
 test.py
 submission/SubmissionModel/**
 submission/*.zip
 backup/**
+checkpoints/**
 model.h5
 models/**
