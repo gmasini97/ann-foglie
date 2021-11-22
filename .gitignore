@@ -1,2 +1,6 @@
 dataset/**
 starting_kit/**
+test.py
+submission/SubmissionModel/**
+submission/*.zip
+backup/**
