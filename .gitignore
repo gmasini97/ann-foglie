@@ -4,3 +4,5 @@ test.py
 submission/SubmissionModel/**
 submission/*.zip
 backup/**
+model.h5
+models/**
