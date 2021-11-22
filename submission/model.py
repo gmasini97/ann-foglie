@@ -3,7 +3,7 @@ import tensorflow as tf
 
 class model:
     def __init__(self, path):
-        self.model = tf.keras.models.load_model(os.path.join(path, 'SubmissionModel/model.h5'))
+        self.model = tf.keras.models.load_model(os.path.join(path, 'SubmissionModel/transfer'))
 
     def predict(self, X):
         out = self.model.predict(X)

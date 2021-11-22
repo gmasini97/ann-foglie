@@ -1,9 +1,12 @@
 import tensorflow as tf
 import utilities.configs as configs
-import utilities.stats as stats
+import utilities.data as data
+
+def a():
+    print("a")
 
 def weights():
-    counts = stats.dataset_count()
+    counts = data.dataset_count()
     max_class = max(counts.values())
     class_weights = {}
     i = 0
@@ -21,8 +24,10 @@ def augmentation_layers():
         ]
     )
 
-def size_add_channels(size):
-    return size + (3,)
+def early_stopping_callbacks():
+    early_stopping = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=configs.EARLY_STOPPING_PATIENCE)
+    save_check_point = tf.keras.callbacks.ModelCheckpoint("./checkpoints/save_at_{epoch}")
+    return (early_stopping, save_check_point)
 
 def compile(model):
     model.compile(

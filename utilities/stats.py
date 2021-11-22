@@ -1,25 +1,32 @@
-import pathlib
 import matplotlib.pyplot as plt
 import utilities.configs as configs
 import numpy as np
 import utilities.model as model
+import utilities.data as data
 
-def dataset_count():
-    dataset_dir_path = pathlib.Path(configs.dataset_dir)
-    images_count_total = len(list(dataset_dir_path.glob('*/*.jpg')))
+def a():
+    print("a")
+
+def dataset_count(ret = False):
+    images_count, images_count_total = data.dataset_count()
     print('Total count: {}'.format(images_count_total))
-    images_count = {}
-    for label in configs.labels:
-        count = len(list(dataset_dir_path.glob('{}/*.jpg'.format(label))))
-        images_count[label] = count
-        print('{} count: {}'.format(label, count))
+    for key, value in images_count.items():
+        print('{} count: {}'.format(key, value))
     plt.figure(figsize=(16,4))
     plt.bar(range(len(configs.labels)), list(images_count.values()))
     plt.xticks(range(len(configs.labels)), configs.labels)
     plt.title('Dataset distribution')
     plt.show()
 
-    return images_count
+    if(ret):
+        return images_count
+
+def dataset_probabilities(probabilities):
+    plt.figure(figsize=(16,4))
+    plt.bar(range(len(configs.labels)), list(probabilities[0]))
+    plt.xticks(range(len(configs.labels)), configs.labels)
+    plt.title('Probability distribution')
+    plt.show()
 
 def plot_dataset(dataset, batch_index = 1, count = 6):
     plt.figure(figsize=(10, 10))
@@ -39,3 +46,26 @@ def plot_augmented_dataset(dataset, batch_index = 1, count = 6):
             ax = plt.subplot(3, 3, i + 1)
             plt.imshow(augim[i].numpy().astype("uint8"))
             plt.axis("off")
+
+def show_layer(model, n = 1):
+    filters, biases = model.layers[n].get_weights()
+    print(filters)
+    # normalize filter values to 0-1 so we can visualize them
+    f_min, f_max = filters.min(), filters.max()
+    filters = (filters - f_min) / (f_max - f_min)
+    # plot first few filters
+    n_filters, ix = 6, 1
+    for i in range(n_filters):
+        # get the filter
+        f = filters[:, :, :, i]
+        # plot each channel separately
+        for j in range(3):
+            # specify subplot and turn of axis
+            ax = plt.subplot(n_filters, 3, ix)
+            ax.set_xticks([])
+            ax.set_yticks([])
+            # plot filter channel in grayscale
+            plt.imshow(f[:, :, j], cmap='gray')
+            ix += 1
+    # show the figure
+    plt.show()
