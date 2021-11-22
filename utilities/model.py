@@ -1,6 +1,6 @@
 import tensorflow as tf
-import configs
-import stats
+import utilities.configs as configs
+import utilities.stats as stats
 
 def weights():
     counts = stats.dataset_count()
@@ -12,30 +12,6 @@ def weights():
         i += 1
 
     return class_weights
-
-def import_dataset(subset):
-    return tf.keras.preprocessing.image_dataset_from_directory(
-        configs.dataset_dir,
-        labels='inferred',
-        label_mode='categorical',
-        class_names=configs.labels,
-        color_mode='rgb',
-        batch_size=configs.BATCH_SIZE,
-        image_size=configs.IMG_SIZE,
-        shuffle=True,
-        seed=configs.SEED,
-        validation_split=configs.SPLIT,
-        subset=configs.subset,
-        interpolation='bilinear',
-        follow_links=False,
-        crop_to_aspect_ratio=False
-    )
-
-def import_datasets():
-    dataset_training = import_dataset('training')
-    dataset_validation = import_dataset('validation')
-
-    return (dataset_training, dataset_validation)
 
 def augmentation_layers():
     return tf.keras.Sequential(
@@ -52,7 +28,7 @@ def compile(model):
     model.compile(
         optimizer=tf.keras.optimizers.Adam(1e-3),
         loss="categorical_crossentropy",
-        metrics=["accuracy"],
+        metrics=["accuracy", "mse"],
     )
 
 def fit(model, training, validation, weights, epochs=configs.EPOCHS):

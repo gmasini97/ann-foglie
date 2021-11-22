@@ -1,8 +1,8 @@
 import pathlib
 import matplotlib.pyplot as plt
-import configs
+import utilities.configs as configs
 import numpy as np
-import model
+import utilities.model as model
 
 def dataset_count():
     dataset_dir_path = pathlib.Path(configs.dataset_dir)
