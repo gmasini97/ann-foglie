@@ -1,0 +1,11 @@
+Gradient descent
+	-momentum
+Activation function
+	-relu
+	-sigmoid
+	-linear
+	-hyperbolic tangent
+cross validation
+holdout
+weight decay
+dropout

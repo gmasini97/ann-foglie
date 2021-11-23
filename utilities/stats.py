@@ -47,9 +47,8 @@ def plot_augmented_dataset(dataset, batch_index = 1, count = 6):
             plt.imshow(augim[i].numpy().astype("uint8"))
             plt.axis("off")
 
-def show_layer(model, n = 1):
-    filters, biases = model.layers[n].get_weights()
-    print(filters)
+def show_layer(model, n = 2):
+    filters = model.layers[n].get_weights()
     # normalize filter values to 0-1 so we can visualize them
     f_min, f_max = filters.min(), filters.max()
     filters = (filters - f_min) / (f_max - f_min)
